@@ -33,3 +33,5 @@ Liquidity mining alternatives
 Security Model
 
 The contract is written in Clarity, a decidable smart contract language native to Stacks, reducing common vulnerabilities such as reentrancy and unpredictable execution paths.
+
+Deployment: https://explorer.hiro.so/address/ST1RDEMSE8XWD013B34N22PWQPVYTESFP9H0RB2G6?chain=testnet
