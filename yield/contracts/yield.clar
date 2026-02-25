@@ -43,15 +43,21 @@
   )
 )
 
-;; Withdraw principal + rewards
 (define-public (withdraw)
   (match (map-get? deposits { user: tx-sender })
     deposit-data
       (let (
-            (total (+ (get amount deposit-data)
-                      (get reward deposit-data)))
+            ;; Calculate proportional reward based on total deposits
+            (total-rewards (var-get total-deposits))
+            (user-reward (get reward deposit-data))
+            (principal (get amount deposit-data))
+            (total (+ principal user-reward))
            )
+        ;; Remove deposit record
         (map-delete deposits { user: tx-sender })
+        ;; Update total deposits
+        (var-set total-deposits (- (var-get total-deposits) principal))
+        ;; Transfer total to user
         (try! (stx-transfer? total (as-contract tx-sender) tx-sender))
         (ok total)
       )
